@@ -1,6 +1,19 @@
+-- Returns the list in reverse order
+-- This function has a complexity of n^2 beacuse it is called n times and adds an element at the end of a linked list wich in iself has complexity n
+-- Calling this function with 100000 list elments took 11.75 seconds
 reverse1 :: [a] -> [a]
 reverse1 [] = []
 reverse1 (x: xs) = reverse xs ++ [x]
+
+-- Returns the list in reverse order
+-- This function has a complexity of n, because were are inserting at the beginning of the linked list wich has a compexity of 1
+-- Calling this function with 100000 took 6 seconds, the difference to reverse1 is relatively small, because printing the whole array introducies significatn overhead
+reverse2 :: [a] -> [a]
+reverse2 [] = []
+reverse2 list = go list []
+    where 
+        go [] reversed = reversed
+        go (x: xs) reversed = go xs (x : reversed)
 
 -- Returns the index of the given int in the list; Nothing if int not n list
 indexOf :: Int -> [Int] -> Maybe Int
