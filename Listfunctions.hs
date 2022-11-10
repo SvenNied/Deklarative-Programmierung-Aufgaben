@@ -38,7 +38,6 @@ tails (x : xs) = (x : xs) : tails xs
 
 -- retuns a list of list withn n inserted at every possible index
 insert :: a -> [a] -> [[a]]
-insert _ [] = []
 insert n list = go [] n list
     where 
         go :: [a] -> a -> [a] -> [[a]]
