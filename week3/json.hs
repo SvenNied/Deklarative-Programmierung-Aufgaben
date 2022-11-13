@@ -8,6 +8,7 @@ data JSON = JNull
           | JObject [(String, JSON)]
   deriving Show
 
+-- returns sampleJson Data
 exampleJSON :: JSON
 exampleJSON = JArray [
     JObject[
@@ -24,15 +25,16 @@ exampleJSON = JArray [
         ]
     ]
 
-foldJson:: a -> (Bool -> a) -> (Int -> a) -> (Float -> a) -> (String -> a) -> ([a] -> a) -> ([(String, a)] -> a) -> JSON -> a
-foldJson fNull fBool fInt fFloat fString fArray fObject input = case input of
+-- folds a json structure, by executing a specified function for each data type
+foldJSON:: a -> (Bool -> a) -> (Int -> a) -> (Float -> a) -> (String -> a) -> ([a] -> a) -> ([(String, a)] -> a) -> JSON -> a
+foldJSON fNull fBool fInt fFloat fString fArray fObject input = case input of
     JNull -> fNull
     JBool x -> fBool x
     JInt x -> fInt x
     JFloat x -> fFloat x
     JString x -> fString x
-    JArray x -> fArray (map (foldJson fNull fBool fInt fFloat fString fArray fObject) x)
-    JObject x -> fObject ( map (\(x,y) -> (x, (foldJson fNull fBool fInt fFloat fString fArray fObject y))) x)
+    JArray x -> fArray (map (foldJSON fNull fBool fInt fFloat fString fArray fObject) x)
+    JObject x -> fObject ( map (\(y,z) -> (y, (foldJSON fNull fBool fInt fFloat fString fArray fObject z))) x)
 
 stringify :: JSON -> String
-stringify = foldJson "null" show show show (\x-> x) (\x -> "[" ++ show x ++ "]") (\x -> "{" ++ show x ++ "}")
+stringify = foldJSON "null" show show show (\x-> x) (\x -> "[" ++ show x ++ "]") (\x -> "{" ++ show x ++ "}")
