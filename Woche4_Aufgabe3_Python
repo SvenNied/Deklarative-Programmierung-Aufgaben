@@ -10,10 +10,6 @@ def filtr (function, list):
     return [list[0]] + filtr(function, list[1:]) if (function(list[0])) else filtr(function, list[1:])
 
 def zipWith(function, firstList, secondList):
-    if (len(firstList) == 0 and len(secondList) == 0):
+    if (len(firstList) == 0 or len(secondList) == 0):
         return []
-    if(len(firstList) == 0):
-        return [secondList[0]] + zipWith(function, [], secondList[1:])
-    if (len(secondList) == 0):
-        return [firstList[0]] + zipWith(function, firstList[1:], [])
     return [function(firstList[0], secondList[0])] + zipWith(function, firstList[1:], secondList[1:])
