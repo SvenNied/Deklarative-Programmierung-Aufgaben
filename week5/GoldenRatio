@@ -23,6 +23,6 @@ approx eps [] = 0
 approx eps [x] = 0
 approx eps (x:y:xs) = 
                          if abs (y - x) < eps 
-                            then y   
+                            then x   
                          else approx eps (y:xs)
 
