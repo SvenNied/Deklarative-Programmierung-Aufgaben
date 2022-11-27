@@ -22,7 +22,7 @@ approx :: Rational -> [Rational] -> Rational
 approx eps [] = 0
 approx eps [x] = 0
 approx eps (x:y:xs) = 
-                         if abs (y - x) < eps 
+                         if abs (y - x) <= eps 
                             then y   
                          else approx eps (y:xs)
 
