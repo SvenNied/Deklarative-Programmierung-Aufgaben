@@ -1,4 +1,3 @@
-import Data.Ratio
 --Aufgabe 1
 --unendliche Fibonacci Liste
 fibgen :: Integer -> Integer -> [Integer]
@@ -10,11 +9,11 @@ fibonacci = fibgen 0 1
 fib :: Int -> Integer
 fib n = fibonacci !! n
 
---golden Ratio
+--Here we generate the list of golden Ratio approxiations
 goldenRatioGen :: Int -> [Rational]
 goldenRatioGen n = 1 + (fib n) % (fib (n+1)) : goldenRatioGen (n+1) 
  
-
+--Generating the list by starting at 0
 goldenRatio :: [Rational]
 goldenRatio = goldenRatioGen 0 
 
@@ -26,3 +25,4 @@ approx eps (x:y:xs) =
                          if abs (y - x) < eps 
                             then y   
                          else approx eps (y:xs)
+
