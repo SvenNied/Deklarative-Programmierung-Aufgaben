@@ -1,0 +1,28 @@
+import Data.Ratio
+--Aufgabe 1
+--unendliche Fibonacci Liste
+fibgen :: Integer -> Integer -> [Integer]
+fibgen n1 n2 = n1 : fibgen n2 (n1 + n2)
+
+fibonacci :: [Integer]
+fibonacci = fibgen 0 1
+
+fib :: Int -> Integer
+fib n = fibonacci !! n
+
+--golden Ratio
+goldenRatioGen :: Int -> [Rational]
+goldenRatioGen n = 1 + (fib n) % (fib (n+1)) : goldenRatioGen (n+1) 
+ 
+
+goldenRatio :: [Rational]
+goldenRatio = goldenRatioGen 0 
+
+--die Approximation
+approx :: Rational -> [Rational] -> Rational 
+approx eps [] = 0
+approx eps [x] = 0
+approx eps (x:y:xs) = 
+                         if abs (y - x) < eps 
+                            then y   
+                         else approx eps (y:xs)
