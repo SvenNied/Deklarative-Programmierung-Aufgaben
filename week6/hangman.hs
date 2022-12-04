@@ -1,5 +1,6 @@
 import Data.Char (toLower)
 
+-- Starts a game of hangman with the specified secret word
 hangman:: String -> IO ()
 hangman word = gameloop [] 0
     where
