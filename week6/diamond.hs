@@ -1,3 +1,4 @@
+-- prints a diamond pixel art
 diamond :: Int -> IO ()
 diamond 0 = putStrLn("")
 diamond levels = putStrLn (getDiamondString (2*levels -1) (levels * 2 -1))
@@ -15,6 +16,7 @@ diamond levels = putStrLn (getDiamondString (2*levels -1) (levels * 2 -1))
                         outerSpaces = spaces ((width - (innerWidth + 2)) `div` 2)
                     in "\n" ++ outerSpaces ++ "*" ++ spaces innerWidth ++ "*" ++ outerSpaces ++  getDiamondString (index - 1) width
 
+-- prints a christmas tree pixel art
 tree :: Int -> IO () 
 tree size = 
     if size < 3 then putStrLn " " else putStrLn (treeString  (2 * size - 2))
