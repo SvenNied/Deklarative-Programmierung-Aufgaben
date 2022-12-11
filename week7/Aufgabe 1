@@ -1,0 +1,16 @@
+data Tree n l = Leaf l | Node (Tree n l) n (Tree n l)
+  deriving Show
+
+--Definition der Instanzen
+instance Functor Tree where
+  fmap f (Leaf x)     = Leaf (f x)
+  fmap f (Node l n r ) = Node (fmap f l) n (fmap f r)
+
+instance Applicative Tree where
+  pure x = Leaf x
+  (Leaf f) <*> t      = fmap f tails
+  (Node l n r) <*> t  = Node (l <*> t) n (r <*> t)
+
+instance Monad Tree where
+  (Leaf x) >>= f = f x
+  (Node l n r) >>= f = Node (l >>= f) n (r >>= f)
