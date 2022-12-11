@@ -1,0 +1,36 @@
+Aufgabe 1
+Kompositionsgesetz
+Wir benötigen eine Fallunterscheidung für x = Nothing und x = Just v
+1. Fall: x = Nothing
+	fmap (f . g) x 	= fmap (f . g) Nothing		[Einsetzen von x = Nothing]
+			   	= Nothing				[Anwenden von fmap]
+				= fmap f Nothing			[Rückwärtsanwenden von fmap auf f]
+				= fmap f (fmap g Nothing)	[Rückwärtsanwenden von fmap auf g]
+				= (fmap f . fmap g) x		[Einsetzen von x und Umschreiben Kompostion]
+2 Fall: x = Just v
+	fmap (f . g) x 	= fmap(f . g) Just v		[Einsetzen x = Just v]
+				= Just ((f . g) v)		[Anwenden fmap]
+				= Just (f ( gv))			[Umschreiben Komposition]
+				= fmap f (Just (g v))		[Anwenden fmap Rückwärts]
+				= fmap f (fmap g (Just v))	[Anwenden fmap Rückwärts]
+				= fmap f (fmap g x)		[x= Just v]
+				= (fmap f . fmap g) x		[Umschreiben Kompositionsfunktion]
+
+Identitäsgesetz für Applikative Funktoren
+Wir benötigen ein Fallunterscheidung für x = Nothing und x = Just v
+1. Fall: x = Nothing 	
+	pure id <*> x 	= (Just id) <*> x 			[Definition von pure]
+				= (Just id) <*> Nothing			[ x= Nothing]
+				= Nothing					[Anwendung von <*>]
+				= x 						[x=Nothing]
+2.Fall: x = Just v
+	pure id <*> x 	= (Just id) <*> x 			[Anwenden von pure]
+				= (Just id) <*> x				[EInsetzen von x = Just v]
+				= Just (id v)				[Anwenden <*>]
+				= Just v					[Anwenden von id]
+				= x						[x = Just v]
+Homomorphismusgesetz für Applikative Funktoren
+	pure f <*> pure x = (Just f) <*> (Just x)			[Def von pure]
+				= Just f x					[Anwendung <*>]
+				= pure (f X)				[Rückwärtsanwenden von pure]
+	
