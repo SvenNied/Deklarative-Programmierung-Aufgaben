@@ -1,4 +1,5 @@
 Aufgabe 1
+{-
 Kompositionsgesetz
 Wir benötigen eine Fallunterscheidung für x = Nothing und x = Just v
 1. Fall: x = Nothing
@@ -34,3 +35,4 @@ Homomorphismusgesetz für Applikative Funktoren
 				= Just f x			[Anwendung <*>]
 				= pure (f x)			[Rückwärtsanwenden von pure]
 	
+-}
