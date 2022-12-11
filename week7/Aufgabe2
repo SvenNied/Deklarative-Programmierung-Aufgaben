@@ -1,0 +1,15 @@
+Aufgabe 2
+Identitätsgesetz
+pure id <*> v 	= return id >>= \f -> v >>=\x -> return f x   	[Einsetzen in die Definiton]
+		  	= (\f -> v >>= \x -> return f x) id			[Left Identity]
+		  	= v >>= \x -> return id x				[Anwenden von Lambda]
+			= v >>= \x -> return x					[Auflösen von Identitätsfunktion]
+			= v >>= return 						[Eta-Reduktion]
+			= v								[Right Identity]
+Homomorphiegsetz
+pure g <*> pure v = return g >>= \f -> return v >>= \x ->return f x	[Einsetzen in Definition]
+			= (\f -> return v >>= \x -> return f x) g			[Left Identity]
+			=return v >>= \x -> return g x				[Anwenden von Lambda]
+		   	=(\x -> return gx) v						[Left Identy]
+			= return g v							[Anwenden Lambda]
+			= pure g v								[Definiton von pure]
