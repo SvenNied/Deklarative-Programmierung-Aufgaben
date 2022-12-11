@@ -1,6 +1,21 @@
-Aufgabe 1
+
 {-
-Kompositionsgesetz
+Identitätsgesetz für Funktoren
+Wir benötigen eine Fallunterscheidung für x = Nothing und x = Just v
+1. Fall: x = Nothing
+	fmap id x 	= fmap id Nothing		[Einsetzen von x = Nothing]
+			= Nothing			[Anwenden fmap]
+			= id Nothing			[Definition von id]
+			= id x				[Einsetzen von x = Nothing]
+
+2 Fall: x = Just v
+	fmap id x 	= fmap id Just v		[Einsetzen x = Just v]
+			= Just (id v)			[Anwenden von fmap]
+			= Just v			[Definition von id]
+			= id(Just v)			[Definition von id]
+			=id x				[Einsetzen x = Just v]
+	
+Kompositionsgesetz für Funktoren
 Wir benötigen eine Fallunterscheidung für x = Nothing und x = Just v
 1. Fall: x = Nothing
 	fmap (f . g) x 	= fmap (f . g) Nothing			[Einsetzen von x = Nothing]
