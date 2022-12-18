@@ -64,4 +64,14 @@ X = Y, Y = Result, Result = true .
 ?- ex3(X,Y,true,Result).
 X = Y, Y = Result, Result = true .
 
+Weiterhin ist Example 3 anscheinend unabhängig von x, wie man im folgenden sieht:
+?- ex3(true,Y,Z,false).
+Y = true,
+Z = false ;
+Y = Z, Z = false .
+
+?- ex3(false,Y,Z,false).
+Y = true,
+Z = false ;
+Y = Z, Z = false .
 */
