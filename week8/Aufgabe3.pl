@@ -56,4 +56,12 @@ Y = false ;
 X = Y, Y = false,
 Z = true .
 
+Abhängigkeiten von x und y
+Anscheinend ist das Ergebnis von der Eingabe von Z ahänging, wie wir bei den folgenden EIngaben sehen. 
+?- ex3(X,Y,true,Result).
+X = Y, Y = Result, Result = true .
+
+?- ex3(X,Y,true,Result).
+X = Y, Y = Result, Result = true .
+
 */
