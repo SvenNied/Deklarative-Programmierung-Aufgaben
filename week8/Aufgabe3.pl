@@ -15,7 +15,7 @@ ex1(X,Y,Z,Result)     :- and(X,Y,Value), or(Value, Z, Result).
 ex2(X,Y,Z,Result)    :- and(X,Y,Value1), and(Y,Z,Value2), or(Value2, Z, Value3), or(Value1, Value3, Result).
 ex3(X,Y,Z,Result)        :- not(Y,Value1), and(X,Value1,Value2), and(Value2,Z,Value3), and(Z,Y,Value4), or(Value4,Z,Value5), or(Value3,Value5, Result).
 
-Wir stellen folgende Anfragen:
+/*Wir stellen folgende Anfragen:
 ?- ex1(true,false,true,Result).
 Result = true.
 
@@ -56,4 +56,4 @@ Y = false ;
 X = Y, Y = false,
 Z = true .
 
-
+*/
