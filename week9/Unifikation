@@ -1,0 +1,66 @@
+t_0 = f(g(X,Y),Z,h(Z));
+t_1 = f(Z,g(Y,X),h(g(a,b)));
+
+k := 0; sigma_0 = {};
+ds(sigma_0(t_0),sigma_0(t_1)) = ds(f(g(X,Y),Z,h(Z)),
+                                  f(Z,g(Y,X),h(g(a,b))))
+                              = {g(X,Y),Z}
+
+sigma_1 = {Z/g(X,Y)}; k := 1;
+ds(sigma_1(t_0),sigma_1(t_1)) = ds(f(g(X,Y),g(X,Y),h(g(X,Y))),
+                                 f(g(X,Y),g(Y,X),h(g(a,b))))
+                              = {X, a}
+
+sigma_2 = {X/a}; k := 2;
+ds(sigma_2(t_0),sigma_2(t_1)) = ds(f(g(a,Y),g(a,Y),h(g(a,Y))),
+                                 f(g(a,Y),g(Y,a),h(g(a,b))))
+                              = {Y,b}
+
+sigma_3 = {X/a,Y/a,Z/b}; k := 3;
+ds(sigma_3(t_0),sigma_3(t_1)) = ds(f(g(a,b),g(a,b),h(g(a,b))),
+                                 f(g(a,b),g(b,a),h(g(a,b))))
+                              = {b,a}
+
+fail (clash failure)
+
+
+t_0 = f(X,g(X));
+t_1 = f(g(Y),Y));
+
+k := 0; sigma_0 = {};
+ds(sigma_0(t_0),sigma_0(t_1)) = ds(f(X,g(X))),
+                                  f(g(Y),Y)))
+                              = {X,g(Y)}
+
+sigma_1 = {X/g(Y)}; k := 1;
+ds(sigma_1(t_0),sigma_1(t_1)) = ds(f(g(Y),g(g(Y)))),
+                                  f(g(Y),Y)))
+                              = {Y,g(g(Y))}
+
+fail (clash failure)
+
+
+t_0 = f(B,C,D);
+t_1 = f(g(A,A),g(B,B),g(C,C));
+
+k := 0; sigma_0 = {};
+ds(sigma_0(t_0),sigma_0(t_1)) = ds(f(B,C,D),
+                                  f(g(A,A),g(B,B),g(C,C)))
+                              = {B,g(A,A)}
+
+sigma_1 = {B/g(A,A)}; k := 1;
+ds(sigma_1(t_0),sigma_1(t_1)) = ds(f(g(A,A),C,D),
+                                  f(g(A,A),g(B,B),g(C,C)))
+                              = {V, g(B,B)}
+
+sigma_2 = {B/g(A,A), C/g(B,B)}; k := 2;
+ds(sigma_2(t_0),sigma_2(t_1)) =ds(f(g(A,A),g(B,B),D),
+                                  f(g(A,A),g(B,B),g(C,C)))
+                              = {D,g(C,C)}
+
+sigma_3 = {B/g(A,A), C/g(B,B), D/g(C,C)}; k := 3;
+ds(sigma_3(t_0),sigma_3(t_1)) = ds(f(g(A,A),g(B,B),g(C,C)),
+                                  f(g(A,A),g(B,B),g(C,C)))
+                              = {}
+Success! 
+The mgu is given by {B/g(A,A), C/g(B,B), D/g(C,C)}
