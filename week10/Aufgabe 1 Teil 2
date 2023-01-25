@@ -1,0 +1,8 @@
+Teil 1
+Die Lösung ist Xs = {1, 2} (siehe SLD-Baum).
+Teil 2
+Der Cut-Operator wird benötigt, weil die Suche nicht terminiert, wenn der zweite Parameter in der zweiten Regel
+eine Variable ist. 
+Falls die Reihenfolge in der zweiten Regel geändert wird, würde die Abfrage in einer Unendlichschleife laufen,
+wenn der erste Parameter eine Variable ist. 
+
