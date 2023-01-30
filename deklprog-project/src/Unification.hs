@@ -33,11 +33,7 @@ ds (Comb f ft) (Comb g gt)            = if(f /= g || (length ft /= length gt))
 
 -- determines the mgu
 unify :: Term -> Term -> Maybe Subst
-unifiy term1 term2 = undefined
-
--- determines the most general unifier (mgu)
-    unify :: Term -> Term -> Maybe Subst
-    unify term1 term2 = (mgu term1 term2) empty
+unifiy term1 term2 = (mgu term1 term2) empty
         where
             mgu subst term1 term2 = if ds (apply subst term1) (apply subst term2) == Just (Var varname, someTerm) || ds (apply subst term1) (apply subst term2) == Just (someTerm, Var varname)
                                       then if (varname 'elem' allVars someTerm) then Nothing else mgu (compose (single varname someTerm) subst) term1 term2  
