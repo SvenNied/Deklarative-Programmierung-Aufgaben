@@ -2,24 +2,23 @@
 
 module Unification
   ( testUnification
-  , ds , unifiy
+  , ds , unify
   ) where
 
 
 import Data.Maybe
+import Base.Type
+import Subst
+import Vars
 
 import Test.QuickCheck
 
 -- Properties
 ds :: Term -> Term -> Maybe (Term, Term)
-ds (Var x)     (Var y)     | x == "_"  = Nothing
-                           | y == "_"  = Nothing
-                           | x == y    = Nothing
+ds (Var x)     (Var y)     | x == y    = Nothing
                            | otherwise = Just (Var x, Var y)
-ds (Var x)     y           | x == "_"  = Nothing
-                           | otherwise = Just (Var x, y)
-ds x           (Var y)     | y == "_"  = Nothing          
-                           | otherwise = Just (Var y, x)
+ds (Var x)     y           = Just (Var x, y)
+ds x           (Var y)     = Just (Var y, x)
 
 ds (Comb f ft) (Comb g gt)            = if(f /= g || (length ft /= length gt)) 
                                           then Just ((Comb f ft), (Comb g gt))
@@ -27,22 +26,29 @@ ds (Comb f ft) (Comb g gt)            = if(f /= g || (length ft /= length gt))
   where                
     firstDsagInList :: [Term] -> [Term] -> Maybe(Term, Term)
     firstDsagInList [] [] = Nothing
-    firstDsagInList (term1:terms1) (term2:terms2) = if (ds a b == Nothing) 
-                                                      then firstDsagInList as bs
-                                                      else ds a b                       
+    firstDsagInList [] _ = undefined
+    firstDsagInList _ [] = undefined
+    firstDsagInList (term1:terms1) (term2:terms2) = if (ds term1 term2 == Nothing) 
+                                                      then firstDsagInList terms1 terms2
+                                                      else ds term1 term2                       
 
 -- determines the mgu
 unify :: Term -> Term -> Maybe Subst
-unifiy term1 term2 = (mgu term1 term2) empty
-        where
-            mgu subst term1 term2 = if ds (apply subst term1) (apply subst term2) == Just (Var varname, someTerm) || ds (apply subst term1) (apply subst term2) == Just (someTerm, Var varname)
-                                      then if (varname 'elem' allVars someTerm) then Nothing else mgu (compose (single varname someTerm) subst) term1 term2  
-                                        else if (ds (apply subst term1) (apply subst term2) == Just _ ) then Nothing
-                                          else if (ds (apply subst term1) (apply subst term2) == Nothing) then Just subst
+unify term1 term2 = (mgu empty (ds term1 term2))
+  where
+    mgu :: Subst -> Maybe (Term, Term) -> Maybe Subst
+    mgu subst Nothing = Just subst
+    mgu subst (Just ((Var varname), t)) = 
+      let newSubst = (compose (single varname t) subst)
+      in if varname `notElem` (allVars t)
+          then mgu newSubst (ds (apply newSubst term1) (apply newSubst term2))
+          else Nothing
+    mgu _ _ = Nothing
+    
 
-{- 
 
-Uncomment this to test the properties when all required functions are implemented
+
+-- Uncomment this to test the properties when all required functions are implemented
 
 -- Does  a variable occur in a term?
 occurs :: VarName -> Term -> Bool
@@ -68,8 +74,9 @@ prop_4 t1 t2 =
   let mMgu = unify t1 t2
   in isJust mMgu ==> let mgu = fromJust mMgu
                      in isNothing (ds (apply mgu t1) (apply mgu t2))
--}
+
 
 -- Run all tests
+return []
 testUnification :: IO Bool
-testUnification = undefined
+testUnification = $quickCheckAll
