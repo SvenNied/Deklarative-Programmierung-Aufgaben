@@ -9,6 +9,7 @@ module Subst
     apply,
     restrictTo,
     testSubst,
+    isEmpty
   )
 where
 
@@ -48,8 +49,8 @@ empty = Subst []
 single :: VarName -> Term -> Subst
 single varName term = Subst [(varName,term)|(Var varName) /= term]
 
--- isEmpty :: Subst -> Bool
--- isEmpty subst = domain subst == []
+isEmpty :: Subst -> Bool
+isEmpty subst = domain subst == []
 
 -- applies a substituition
 apply :: Subst -> Term -> Term
