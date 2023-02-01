@@ -36,7 +36,7 @@ dfs (SLDTree _ []) = []
 dfs (SLDTree _ nodes) = concatMap handleNode nodes
   where
     handleNode:: (Subst,SLDTree) -> [Subst]
-    handleNode (subst, tree) = map (compose subst) (dfs tree)
+    handleNode (subst, tree) = subst: dfs tree
 
 bfs :: Strategy
 bfs (SLDTree _ []) = []
