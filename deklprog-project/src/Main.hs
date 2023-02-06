@@ -24,14 +24,22 @@ main = do
           programLoop strategy prog
         (Right command) -> case command of
           Help -> do 
-            putStr "Help"
+            putStr help
             programLoop strategy prog
-          (Load path) -> undefined
-          Quit -> putStr "Goodbye"
+          (Load path) -> do
+            possibleProg <- parseFile path
+            case (possibleProg) of
+              (Left errorString) -> do
+                putStr (errorString ++ "\n")
+                programLoop strategy prog
+              (Right newProg) -> do
+                putStr ("Loaded program: " ++ path ++ "\n")
+                programLoop strategy newProg
+          Quit -> putStr "Goodbye\n"
           (SetStrategy newStrategy) -> do
-            putStr "Strategy changed"
+            putStr "Strategy changed\n"
             programLoop newStrategy prog
-          (SolveGoal goal) -> undefined
+          (SolveGoal goal) -> printAnswers (solveWith prog goal strategy) (programLoop strategy prog)
 
 -- Title screen
 title :: IO ()
@@ -74,3 +82,12 @@ printAnswers (ans:anss) io = do
   if c `elem` "; n"
     then printAnswers anss io
     else io
+
+help :: String
+help = "Commands available from the prompt:\n\
+  \<goal>      Solves/proves the specified goal.\n\
+  \:h          Shows this help message.\n\
+  \:l <file>   Loads the specified file.\n\
+  \:q          Exits the interactive environment.\n\
+  \:s <strat>  Sets the specified search strategy\n\
+  \            where <strat> is one of 'dfs' or 'bfs'.\n"
